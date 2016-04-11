@@ -1,8 +1,8 @@
 CC = g++
 CFLAGS = -g -Wall
 
-all: test.cpp
-	$(CC) $(CFLAGS) -o test.out test.cpp
+all: chess.cpp piece.cpp player.cpp board.cpp
+	$(CC) $(CFLAGS) -o chess chess.cpp
 
-clean:
-	$(RM) test.out
+clean: 
+	$(RM) chess
