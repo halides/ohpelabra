@@ -1,27 +1,16 @@
 #include "piece.h"
 
-class Out_of_board {};
-
-class Position {
+/*class Piece {
     char rank; //1-8
     char file; //a-h
-  public:
-    Position (char, char);
-};
-
-Position::Position (char rank, char file) {
-    if (rank < 1 || rank > 8 || file < 'a' || file > 'h') throw Out_of_board();
-    this->rank = rank;
-    this->file = file;
-};
-
-class Piece {
-    enum class color {white, black};
+    color col;
   public:
     void set_pos(char, char);
-    Piece (Position);
-};
+    Piece (char, char, color);
+};*/
 
-Piece::Piece (Position pos) {
-
+Piece::Piece (char r, char f, color c) {
+    rank = r;
+    file = f;
+    col = c;
 };
