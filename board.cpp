@@ -1,6 +1,6 @@
 #include "player.h"
 
 class Board {
-    Player wp = Player(white);
-    Player bp = Player(black);
+    Player wp = Player(color::white);
+    Player bp = Player(color::black);
 };
