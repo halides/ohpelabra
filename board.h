@@ -6,5 +6,5 @@ class Board {
     Player bp;
   public:
     Board();
-    Player get_player(std::string);
+    Player& get_player(std::string);
 };
