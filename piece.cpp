@@ -1,15 +1,25 @@
 #include "piece.h"
 
-Piece::Piece(char r, char f, echelon e) {
-    set_pos(r,f);
+Piece::Piece(Position p, echelon e, echelon qe) {
+    try {
+        set_pos(p);
+    } catch (int e) {
+        throw;
+    }
+    state = true; //alive
+    ech = e;
+    qech = qe;
 }
 
-int Piece::set_pos(char r, char f) {
-    if (r < 'a' || r > 'h' || f < 1 || f > 8) {
-        return 1;
+void Piece::set_pos(Position p) {
+    if (p.file < 'a' || p.file > 'h' || p.rank < 1 || p.rank > 8) {
+        throw 1;
     } else {
-        rank = r;
-        file = f;
-        return 0;
+        rank = p.rank;
+        file = p.file;
     }
+}
+
+void Piece::set_state(bool s) {
+    state = s;
 }
