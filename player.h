@@ -7,5 +7,6 @@ class Player {
     std::vector<Piece> pieces;
     color col;
   public:
-    Player(color c);
+    Player(){}
+    Player(color);
 };

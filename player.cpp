@@ -2,4 +2,4 @@
 
 Player::Player(color c) {
     col = c;
-};
+}
