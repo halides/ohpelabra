@@ -7,6 +7,7 @@ class Player {
     std::vector<Piece> pieces;
     color col;
   public:
-    Player(){}
+//    Player(){} //either or, board.cpp
     Player(color);
+    void move(Position, Position);
 };
