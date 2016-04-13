@@ -1,6 +1,7 @@
 #include "player.h"
+#include "board.h"
 
-class Board {
+Board::Board() {
     Player wp {color::white};
     Player bp {color::black};
 };

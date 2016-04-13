@@ -1,3 +1,4 @@
 class Board {
-
+  public:
+    Board();
 };
