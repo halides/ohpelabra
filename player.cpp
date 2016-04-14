@@ -4,8 +4,10 @@
 
 Player::Player(color c) {
     col = c;
+
     Position pos;
     std::vector<echelon> qp;
+
     for (int i=0; i<8; i++) {
         qp.push_back(echelon::pawn);
     }
@@ -25,7 +27,7 @@ Player::Player(color c) {
 
     for (int i=1; i<9; i++) {
         pos.rank = (c == color::white)?2:7; //i just love the trinary operator
-        pos.file = 96+i;
+        pos.file = 96+i; //ASCII 'a' == 97
         pieces.push_back(Piece(pos, echelon::pawn, qp.back()));
         qp.pop_back();
     }
