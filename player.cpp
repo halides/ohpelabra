@@ -61,8 +61,21 @@ Player::Player(color c) {
     pos.file='e';
     pieces.push_back(Piece(pos, echelon::king, echelon::king));
 
-    for (Piece p: pieces) {
+/*    for (Piece p: pieces) {
         std::cout << p.get_pos().file << (int)p.get_pos().rank << ": " << p.get_ech() << " q: " << p.get_qech() << "\n";
     }
-    std::cout << "\n";
+    std::cout << "\n";*/
+}
+
+void Player::move(Position from, Position to) {
+    for (Piece& p: pieces) {
+        if (p.get_pos() == from) {
+            p.set_pos(to);
+            return;
+        }
+    }
+}
+
+const std::vector<Piece>& Player::get_pieces() {
+    return pieces;
 }

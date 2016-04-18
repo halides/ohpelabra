@@ -3,6 +3,11 @@ enum class echelon {pawn, knight, bishop, rook, queen, king};
 struct Position {
     char rank; //1-8
     char file; //a-h
+
+    bool operator==(const Position rhs) {
+         if (rank == rhs.rank && file == rhs.file) return true;
+         return false;
+    }
 };
 
 class Piece {

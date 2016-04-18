@@ -10,4 +10,5 @@ class Player {
     Player(){} //either or, board.cpp
     Player(color);
     void move(Position, Position);
+    const std::vector<Piece>& get_pieces();
 };
