@@ -1,9 +1,11 @@
 #include "piece.h"
+#include <iostream>
 
 Piece::Piece(Position p, echelon e, echelon qe) {
     try {
         set_pos(p);
     } catch (int e) {
+std::cout << "abua";
         throw;
     }
     state = true; //alive
@@ -13,7 +15,7 @@ Piece::Piece(Position p, echelon e, echelon qe) {
 
 void Piece::set_pos(Position p) {
     if (p.file < 'a' || p.file > 'h' || p.rank < 1 || p.rank > 8) {
-        throw 1;
+        throw 2;
     } else {
         pos.rank = p.rank;
         pos.file = p.file;

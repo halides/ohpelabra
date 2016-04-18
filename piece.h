@@ -1,8 +1,8 @@
 enum class echelon {pawn, knight, bishop, rook, queen, king};
 
 struct Position {
-    char rank; //1-8
     char file; //a-h
+    char rank; //1-8
 
     bool operator==(const Position rhs) {
          if (rank == rhs.rank && file == rhs.file) return true;
