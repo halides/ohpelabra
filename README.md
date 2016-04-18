@@ -2,7 +2,17 @@
 
 ## Trying to build a quantum chess with C++
 
+### Rules of the game
+
 http://research.cs.queensu.ca/Parallel/QuantumChess/QuantumChess.html
+
+Normal chess rules with additions:
+- each piece (except the king) has in addition to it's normal value a randomly chosen quantum value from the collection of 8 pawns, 2 rooks, 2 knights, 2 bishops and 1 queen.
+- when a player wants to move, he chooses a piece. that piece has a 50-50 chance of being the normal piece or the quantum piece for that move. the player has to move that piece and it automatically goes back to normal after the move.
+- the quantum value is not known by either player until a piece randomly collapses to a quantum piece.
+- there is no "check" or "checkmate". the king is a piece that is captured as any other piece and this is the win condition.
+
+### Technical notes
 
 gcc 4.9.2, using C++14. (g++-4.9 -g -Wall -std=c++14)
 
@@ -21,3 +31,4 @@ Hours:
 - 8.4 1h think about stuff, mod readme
 - 11.4 4h basic structure, lots of reading up on C++
 - 14.4 4h lots of progress, help from a friend
+- 18.4 dunno yet

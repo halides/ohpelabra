@@ -10,10 +10,12 @@ int main () {
     }
     std::cout << "\n";
 
-    Position from, to;
-    from.rank=2; from.file='b';
-    to.rank=4; to.file='b';
+    Position from {2, 'b'};
+    Position to {4, 'b'};
+//    from.rank=2; from.file='b';
+//    to.rank=4; to.file='b';
     wp.move(from, to);
+    wp.move(Position {2, 'c'}, Position {3, 'c'});
 
     for (const Piece& p: wp.get_pieces()) {
         std::cout << p.get_pos().file << (int)p.get_pos().rank << ": " << p.get_ech() << " q: " << p.get_qech() << "\n";
