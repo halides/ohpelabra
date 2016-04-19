@@ -1,5 +1,6 @@
 #include "piece.h"
 #include <iostream>
+#include <algorithm>
 
 Piece::Piece(Position p, echelon e, echelon qe) {
     try {
@@ -9,6 +10,7 @@ std::cout << "abua";
         throw;
     }
     state = true; //alive
+    has_moved = false; //has not moved yet
     ech = e;
     qech = qe;
 }
@@ -22,8 +24,20 @@ void Piece::set_pos(Position p) {
     }
 }
 
+echelon Piece::get_random_ech() const {
+    if(rand()%2) {
+        return ech;
+    } else {
+        return qech;
+    }
+}
+
 void Piece::set_state(bool s) {
     state = s;
+}
+
+bool Piece::get_state() const {
+    return state;
 }
 
 Position Piece::get_pos() const {

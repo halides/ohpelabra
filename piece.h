@@ -15,12 +15,18 @@ class Piece {
     echelon ech;
     echelon qech; //quantum echelon
     bool state; //dead or alive
-    const char* ech_to_str(echelon) const;
+    bool quantum_known; //is the quantum echelon known?
     
   public:
+    bool has_moved; //has it moved? important for pawns (and for castling)
+
+    const char* ech_to_str(echelon) const;
+
     Piece(Position, echelon, echelon);
     void set_pos(Position);
+    echelon get_random_ech() const;
     void set_state(bool);
+    bool get_state() const;
     Position get_pos() const;
     const char* get_ech() const;
     const char* get_qech() const;

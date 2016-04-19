@@ -68,7 +68,7 @@ Player::Player(color c) {
 }
 
 void Player::move(Position from, Position to) {
-    std::cout << from.file << from.rank << to.file << to.rank;
+//    std::cout << from.file << from.rank << to.file << to.rank;
     for (Piece& p: pieces) {
         if (p.get_pos() == from) {
             p.set_pos(to);
