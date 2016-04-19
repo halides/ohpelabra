@@ -34,11 +34,10 @@ int main () {
             if (input.compare(0,5,"sele ") == 0) {
                 pad = 5;
             }
-            Position pos {input.at(pad), input.at(pad+1)-48};
-            echelon ech;
+            Position pos {input.at(pad), input.at(pad+1)-48}; //yay magic!
             for (Piece& p: wp.get_pieces()) {
                 if(p.get_pos() == pos) {
-                     ech = p.get_random_ech();
+                     echelon ech = p.get_random_ech();
                      for (const Position pose: b.get_moves(ech, p)) {
                          std::cout << "a pose: "<< pose.file << (int)pose.rank << std::endl;
                      }
