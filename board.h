@@ -9,5 +9,5 @@ class Board {
   public:
     Board();
     Player& get_player(std::string);
-    const std::vector<Position> get_moves(echelon, Piece);
+    std::vector<Position> get_moves(echelon, Piece);
 };

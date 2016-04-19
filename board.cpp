@@ -13,7 +13,7 @@ Player& Board::get_player(std::string s) {
     }
 }
 
-const std::vector<Position> Board::get_moves(echelon e, Piece p) {
+std::vector<Position> Board::get_moves(echelon e, Piece p) {
     std::vector<Position> poses;
     Position pos = p.get_pos();
     if (t == turn::white) {
