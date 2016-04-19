@@ -39,13 +39,13 @@ int main () {
             for (Piece& p: wp.get_pieces()) {
                 if(p.get_pos() == pos) {
                      ech = p.get_random_ech();
-                     for (Position pose: b.get_moves(ech, p)) {
+                     for (const Position pose: b.get_moves(ech, p)) {
                          std::cout << "a pose: "<< pose.file << (int)pose.rank << std::endl;
                      }
                      std::cout << "The piece will be: " << p.ech_to_str(ech) << "\nWhere do you want to move it to: ";
                      getline(std::cin, input);
+                     p.set_pos(Position {input.at(0), input.at(1)-48});
                      break;
-//                     p.set_pos(Position {input.at(0), input.at(1)-48});
                 }
             }
 //            wp.move(pos, Position {input.at(0), input.at(1)-48});
