@@ -20,7 +20,7 @@ const std::vector<Position> Board::get_moves(echelon e, Piece p) {
         switch(e) {
           case echelon::pawn:
             if(!p.has_moved) {
-                p.has_moved=true;
+//                p.has_moved=true;
                 poses.push_back(Position {pos.file, pos.rank+2});
             }
                 poses.push_back(Position {pos.file, pos.rank+1});

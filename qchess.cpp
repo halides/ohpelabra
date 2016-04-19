@@ -44,12 +44,12 @@ int main () {
                      }
                      std::cout << "The piece will be: " << p.ech_to_str(ech) << "\nWhere do you want to move it to: ";
                      getline(std::cin, input);
-                     p.set_pos(Position {input.at(0), input.at(1)-48});
                      break;
                 }
             }
-//            wp.move(pos, Position {input.at(0), input.at(1)-48});
-            std::cout << input.at(0) << (int)input.at(1);// << input.at(pad+3) << input.at(pad+4);
+            wp.move(pos, Position {input.at(0), input.at(1)-48});
+//                     p.set_pos(Position {input.at(0), input.at(1)-48});
+            std::cout << input.at(0) << input.at(1);// << input.at(pad+3) << input.at(pad+4);
         }
 
         std::cout << "Please input command: ";
