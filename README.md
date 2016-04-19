@@ -36,4 +36,5 @@ Hours:
 - 8.4 1h think about stuff, mod readme
 - 11.4 4h basic structure, lots of reading up on C++
 - 14.4 4h lots of progress, help from a friend
-- 18.4 dunno yet
+- 18.4 3h piece movement
+- 19.4 3h collision, running into a bad bug

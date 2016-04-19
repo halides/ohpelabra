@@ -11,7 +11,7 @@ int main () {
     Player& bp = b.get_player("black");
     std::string input;
 
-    std::cout << "\n\nCommands: (m)ove, quit, (p)rint\n\nPlease input command: ";
+    std::cout << "\n\nCommands: (s)elect, quit, (p)rint\n\nPlease input command: ";
     while (getline(std::cin, input)) {
         std::cout << "input: " << input << std::endl;
 
@@ -29,26 +29,20 @@ int main () {
             std::cout << "\n";
         }
 
-        if (input.compare(0,2,"s ") == 0 || input.compare(0,5,"sele ") == 0) {
-            int pad = 2;
-            if (input.compare(0,5,"sele ") == 0) {
-                pad = 5;
-            }
-            Position pos {input.at(pad), input.at(pad+1)-48}; //yay magic!
+        if (input.compare(0,2,"s ") == 0) {
+            Position pos {input.at(2), input.at(3)-48}; //yay magic!
             for (Piece& p: wp.get_pieces()) {
                 if(p.get_pos() == pos) {
                      echelon ech = p.get_random_ech();
-                     for (const Position pose: b.get_moves(ech, p)) {
+                     for (Position pose: b.get_moves(ech, p)) {
                          std::cout << "a pose: "<< pose.file << (int)pose.rank << std::endl;
                      }
                      std::cout << "The piece will be: " << p.ech_to_str(ech) << "\nWhere do you want to move it to: ";
-                     getline(std::cin, input);
                      break;
                 }
             }
+            getline(std::cin, input);
             wp.move(pos, Position {input.at(0), input.at(1)-48});
-//                     p.set_pos(Position {input.at(0), input.at(1)-48});
-            std::cout << input.at(0) << input.at(1);// << input.at(pad+3) << input.at(pad+4);
         }
 
         std::cout << "Please input command: ";
