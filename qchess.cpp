@@ -35,19 +35,21 @@ int main () {
                 pad = 5;
             }
             Position pos {input.at(pad), input.at(pad+1)-48};
-            for (const Piece& p: wp.get_pieces()) {
+            echelon ech;
+            for (Piece& p: wp.get_pieces()) {
                 if(p.get_pos() == pos) {
-                     echelon ech = p.get_random_ech();
+                     ech = p.get_random_ech();
                      for (Position pose: b.get_moves(ech, p)) {
                          std::cout << "a pose: "<< pose.file << (int)pose.rank << std::endl;
                      }
                      std::cout << "The piece will be: " << p.ech_to_str(ech) << "\nWhere do you want to move it to: ";
                      getline(std::cin, input);
+                     break;
 //                     p.set_pos(Position {input.at(0), input.at(1)-48});
-                     wp.move(pos, Position {input.at(0), input.at(1)-48});
                 }
             }
-//            std::cout << input.at(pad) << input.at(pad+1) << input.at(pad+3) << input.at(pad+4);
+//            wp.move(pos, Position {input.at(0), input.at(1)-48});
+            std::cout << input.at(0) << (int)input.at(1);// << input.at(pad+3) << input.at(pad+4);
         }
 
         std::cout << "Please input command: ";
