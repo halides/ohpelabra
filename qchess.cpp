@@ -28,13 +28,16 @@ int main () {
             }
             std::cout << "\n";
         }
-
-        if (input.compare(0,2,"s ") == 0) {
+        else if (input.compare(0,2,"s ") == 0) {
+std::cout << "mentiin tänne\n";
             Position pos {input.at(2), input.at(3)-48}; //yay magic!
             for (Piece& p: wp.get_pieces()) {
                 if(p.get_pos() == pos) {
+std::cout << "mentiin tonne\n";
                      echelon ech = p.get_random_ech();
-                     for (Position pose: b.get_moves(ech, p)) {
+                     auto moves = b.get_moves(ech, p);
+                     for (Position pose: moves) {
+std::cout << "päästiin tänne\n";
                          std::cout << "a pose: "<< pose.file << (int)pose.rank << std::endl;
                      }
                      std::cout << "The piece will be: " << p.ech_to_str(ech) << "\nWhere do you want to move it to: ";

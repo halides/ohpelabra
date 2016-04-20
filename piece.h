@@ -8,6 +8,11 @@ struct Position {
          if (rank == rhs.rank && file == rhs.file) return true;
          return false;
     }
+
+    Position& operator=(const Position rhs) {
+         file = rhs.file; rank = rhs.rank;
+         return *this;
+    } //this is unnecessary, sort of!
 };
 
 class Piece {
