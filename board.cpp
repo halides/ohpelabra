@@ -15,7 +15,8 @@ Player& Board::get_player(std::string s) {
 }
 
 sqr_state Board::is_free(Position pos) {
-    for (Piece& p: wp.get_pieces()) {
+   if (pos.file < 'a' || pos.file > 'h' || pos.rank < 1 || pos.rank > 8) return sqr_state::illegal;
+   for (Piece& p: wp.get_pieces()) {
         if (pos == p.get_pos()) {
              return sqr_state::white;
         }
@@ -45,6 +46,13 @@ std::vector<Position> Board::get_moves(echelon e, Piece& p) {
                     poses.push_back(tmpos);
                 }
             }
+            tmpos = {pos.file-1, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file+1, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            
             break;
           case echelon::knight:
             break;

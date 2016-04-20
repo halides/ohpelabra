@@ -2,7 +2,7 @@
 #include "player.h"
 #include <string>
 enum class turn {white, black};
-enum class sqr_state {free, white, black};
+enum class sqr_state {free, white, black, illegal};
 
 class Board {
     Player wp;

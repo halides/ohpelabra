@@ -16,6 +16,9 @@ Normal chess rules apply with the following changes:
 - the king can be played into and left in check.
 - castling is not allowed.
 - there is no "en passant"-rule.
+- a pawn reaching the last rank is promoted. this promotion is for it's current state.
+- if a piece in quantum state on the far row is touched and revealed to be a pawn, it is promoted, but the promotion takes up the turn. the superimposed piece type is not affected.
+
 
 ### Technical notes
 
