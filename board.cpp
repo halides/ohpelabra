@@ -54,15 +54,203 @@ std::vector<Position> Board::get_moves(echelon e, Piece& p) {
                 poses.push_back(tmpos);
             
             break;
+
           case echelon::knight:
+            if(!p.has_moved)
+                p.has_moved=true;
+            tmpos = {pos.file+2, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file+2, pos.rank-1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file-2, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file-2, pos.rank-1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file+1, pos.rank-2};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file-1, pos.rank-2};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file+1, pos.rank+2};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+            tmpos = {pos.file-1, pos.rank+2};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
             break;
+
           case echelon::bishop:
+            tmpos = {pos.file+1, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++; tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++; tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--; tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--; tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
             break;
           case echelon::rook:
+            tmpos = {pos.file+1, pos.rank};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
             break;
           case echelon::queen:
+            tmpos = {pos.file+1, pos.rank};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++; tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file++; tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank+1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--; tmpos.rank++;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank-1};
+            while(is_free(tmpos) == sqr_state::free) {
+                poses.push_back(tmpos);
+                tmpos.file--; tmpos.rank--;
+            }
+            if (is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
             break;
           case echelon::king:
+            tmpos = {pos.file-1, pos.rank-1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file-1, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank+1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file+1, pos.rank-1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
+            tmpos = {pos.file, pos.rank-1};
+            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_state::black)
+                poses.push_back(tmpos);
+
             break;
           default:;
         }
