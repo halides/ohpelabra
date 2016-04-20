@@ -41,3 +41,4 @@ Hours:
 - 14.4 4h lots of progress, help from a friend
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
+- 20.4 3h fixed bug, pawn movement implemented
