@@ -45,3 +45,4 @@ Hours:
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
 - 20.4 3h fixed bug, pawn movement implemented
+- 21.4 3h all movements implemented, collision check ok, capturing pieces ok
