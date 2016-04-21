@@ -40,4 +40,4 @@ Hours:
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
 - 20.4 4h fixed bug (uninitialized variable), pawn movement implemented
-- 21.4 7h all movements implemented, collision check ok, capturing pieces ok. another bad bug which was resolved (return value was a ref but then using it by value anyhow).
+- 21.4 9h all movements implemented, collision check ok, capturing pieces ok. another bad bug which was resolved (return value was a ref but then using it by value anyhow).
