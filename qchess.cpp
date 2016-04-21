@@ -9,8 +9,6 @@ void print_board(Board&);
 
 int main () {
     Board b;
-//    Player& wp = b.get_player("white");
-//    Player& bp = b.get_player("black");
     std::string input;
     print_board(b);
 
@@ -78,7 +76,9 @@ int main () {
 }
 
 void print_board(Board& b) {
-/*        std::cout << "white pieces:\n";
+/*    Player& wp = b.get_player("white");
+    Player& bp = b.get_player("black");
+        std::cout << "white pieces:\n";
     for (const Piece& p: wp.get_pieces()) {
         std::cout << p.get_pos().file << p.get_pos().rank << ": " << p.get_ech() << " q: " << p.get_qech() << " " << (p.alive?"ALIVE":"DEAD") << (p.quantum_known?" QKNOW":" QUNK") << (p.has_moved?" MOVED":" NOTMV") << "\n";
     }
@@ -87,7 +87,7 @@ void print_board(Board& b) {
         std::cout << p.get_pos().file << p.get_pos().rank << ": " << p.get_ech() << " q: " << p.get_qech() << " " << (p.alive?"ALIVE":"DEAD") << (p.quantum_known?" QKNOW":" QUNK") << (p.has_moved?" MOVED":" NOTMV") << "\n";
     }
     std::cout << "\n";
-    std::cout << "a printout\n";*/
+    std::cout << "a printout\n";//*/
     std::cout << "    .------.------.------.------.------.------.------.------.\n";
     std::cout << "    |      |      |      |      |      |      |      |      |\n";
     for (char c = '8'; c >= '1'; c--) {

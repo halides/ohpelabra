@@ -46,6 +46,7 @@ void Board::give_turn() {
 
 bool Board::move(Position from, Position to, std::vector<Position> moves) {
     bool ok = false;
+    int i_erase = 0;
     for (Position pos: moves) {
         if (to == pos) ok = true;
     }
@@ -58,9 +59,10 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
                         std::cout << "\n\n\nOMG White player won!\n\n\n";
                         exit(0);
                     }
-                    p.alive=false;
+                    bp.get_pieces().erase(bp.get_pieces().begin()+i_erase);
                     break;
                 }
+                i_erase++;
             }
         t = turn::black;
         return true;
@@ -74,9 +76,10 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
                         std::cout << "\n\n\nOMG Black player won!\n\n\n";
                         exit(0);
                     }
-                    p.alive=false;
+                    wp.get_pieces().erase(wp.get_pieces().begin()+i_erase);
                     break;
                 }
+                i_erase++;
             }
         t = turn::white;
         return true;
