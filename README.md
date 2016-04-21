@@ -9,7 +9,6 @@ http://research.cs.queensu.ca/Parallel/QuantumChess/QuantumChess.html
 Normal chess rules apply with the following changes:
 - each piece (except the king) has in addition to it's normal value a randomly chosen quantum value from the collection of 8 pawns, 2 rooks, 2 knights, 2 bishops and 1 queen.
 - when a player wants to move, he chooses a piece. that piece has a 50-50 chance of being the normal piece or the quantum piece for that move. the player has to move that piece and it automatically goes back to normal after the move.
-- a piece in classical state with no legal moves cannot be chosen.
 - if a piece collapses into a type with no possible moves, then the player’s turn is over.
 - the quantum value is not known by either player until a piece randomly collapses to a quantum piece.
 - there is no "check" or "checkmate". the king is a piece that is captured as any other piece and this is a win condition.
@@ -18,6 +17,9 @@ Normal chess rules apply with the following changes:
 - there is no "en passant"-rule.
 - a pawn reaching the last rank is promoted. this promotion is for it's current state.
 - if a piece in quantum state on the far row is touched and revealed to be a pawn, it is promoted, but the promotion takes up the turn. the superimposed piece type is not affected.
+
+
+- (a piece in classical state with no legal moves cannot be chosen.) personally i felt this a bit boring and i left in the ability to play the lotto
 
 
 ### Technical notes
