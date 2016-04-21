@@ -5,9 +5,9 @@
 enum class color {white, black};
 
 class Player {
-    std::vector<Piece> pieces;
     color col;
   public:
+    std::vector<Piece> pieces;
     Player(){} //either or, board.cpp
     Player(color);
     bool move(Position, Position);

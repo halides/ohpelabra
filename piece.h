@@ -20,13 +20,15 @@ class Piece {
     Position pos;
     echelon ech;
     echelon qech; //quantum echelon
-    bool quantum_known; //is the quantum echelon known?
+    std::string last_state;
     
   public:
+    bool quantum_known; //is the quantum echelon known?
     bool alive; //dead or alive
     bool has_moved; //has it moved? important for pawns (and for castling)
 
     std::string ech_to_str(echelon) const;
+    std::string ech_to_long_str(echelon) const;
 
     Piece(Position, echelon, echelon);
     Piece() {};

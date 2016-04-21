@@ -1,5 +1,7 @@
 #include "board.h"
 #include <string>
+#include <algorithm>
+#include <iostream>
 
 Board::Board() { // : wp(color::white), bp(color::black) {
     wp = Player(color::white); //either or, player.h
@@ -13,6 +15,28 @@ Player& Board::get_player(std::string s) {
     } else {
         return bp;
     }
+}
+
+std::string Board::get_piece_str(Position pos) {
+    std::string s;
+    for(Piece& p: wp.get_pieces()) {
+        if (p.get_pos() == pos && p.alive) {
+            s = p.get_ech();
+            if (p.quantum_known) s += p.get_qech();
+            else s += "?";
+            return s;
+        }
+    }
+    for(Piece& p: bp.get_pieces()) {
+        if (p.get_pos() == pos && p.alive) {
+            s = p.get_ech();
+            if (p.quantum_known) s += p.get_qech();
+            else s += "?";
+            std::transform(s.begin(), s.end(),s.begin(), ::toupper);
+            return s;
+        }
+    }
+    return "  ";
 }
 
 void Board::give_turn() {
@@ -30,6 +54,9 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
         if (wp.move(from, to)) {
             for (Piece& p: bp.get_pieces()) {
                 if (to == p.get_pos()) {
+                    if (p.get_ech() == "k") {
+                        std::cout << "\n\n\nOMG White player won!\n\n\n";
+                    }
                     p.alive=false;
                     break;
                 }
@@ -42,6 +69,9 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
         if (bp.move(from, to)) {
             for (Piece& p: wp.get_pieces()) {
                 if (to == p.get_pos()) {
+                    if (p.get_ech() == "k") {
+                        std::cout << "\n\n\nOMG Black player won!\n\n\n";
+                    }
                     p.alive=false;
                     break;
                 }
@@ -78,12 +108,12 @@ std::string Board::get_turn() {
 sqr_state Board::is_free(Position pos) {
    if (pos.file < 'a' || pos.file > 'h' || pos.rank < '1' || pos.rank > '8') return sqr_state::illegal;
    for (Piece& p: wp.get_pieces()) {
-        if (pos == p.get_pos()) {
+        if (pos == p.get_pos() && p.alive) {
              return sqr_state::white;
         }
     }
     for (Piece& p: bp.get_pieces()) {
-        if (pos == p.get_pos()) {
+        if (pos == p.get_pos() && p.alive) {
              return sqr_state::black;
         }
     }

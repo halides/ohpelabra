@@ -15,6 +15,7 @@ class Board {
     Piece& select(Position);
     bool move(Position, Position, std::vector<Position>);
     std::string get_turn();
+    std::string get_piece_str(Position);
     sqr_state is_free(Position);
     void give_turn();
 };

@@ -19,7 +19,7 @@ Normal chess rules apply with the following changes:
 - if a piece in quantum state on the far row is touched and revealed to be a pawn, it is promoted, but the promotion takes up the turn. the superimposed piece type is not affected.
 
 
-(a piece in classical state with no legal moves cannot be chosen.) personally i felt this a bit boring and i left in the ability to play the lotto
+(a piece in classical state with no legal moves cannot be chosen.) Personally I felt this a bit boring and left in the ability to play the lottery.
 
 
 ### Technical notes
