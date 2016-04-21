@@ -10,6 +10,6 @@ class Player {
   public:
     Player(){} //either or, board.cpp
     Player(color);
-    void move(Position, Position);
+    bool move(Position, Position);
     std::vector<Piece>& get_pieces();
 };

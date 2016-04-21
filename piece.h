@@ -1,3 +1,4 @@
+#include <string>
 enum class echelon {pawn, knight, bishop, rook, queen, king};
 
 struct Position {
@@ -12,27 +13,26 @@ struct Position {
     Position& operator=(const Position rhs) {
          file = rhs.file; rank = rhs.rank;
          return *this;
-    } //this is unnecessary, sort of!
+    } //this is unnecessary, the compiler does this
 };
 
 class Piece {
     Position pos;
     echelon ech;
     echelon qech; //quantum echelon
-    bool state; //dead or alive
     bool quantum_known; //is the quantum echelon known?
     
   public:
+    bool alive; //dead or alive
     bool has_moved; //has it moved? important for pawns (and for castling)
 
-    const char* ech_to_str(echelon) const;
+    std::string ech_to_str(echelon) const;
 
     Piece(Position, echelon, echelon);
+    Piece() {};
     void set_pos(Position);
-    echelon get_random_ech() const;
-    void set_state(bool);
-    bool get_state() const;
+    echelon get_random_ech();
     Position get_pos() const;
-    const char* get_ech() const;
-    const char* get_qech() const;
+    std::string get_ech() const;
+    std::string get_qech() const;
 };

@@ -12,5 +12,9 @@ class Board {
     Board();
     Player& get_player(std::string);
     std::vector<Position> get_moves(echelon, Piece&);
+    Piece& select(Position);
+    bool move(Position, Position, std::vector<Position>);
+    std::string get_turn();
     sqr_state is_free(Position);
+    void give_turn();
 };

@@ -26,12 +26,12 @@ Player::Player(color c) {
     std::random_shuffle(qp.begin(), qp.end());
 
     for (int i=1; i<9; i++) {
-        pos.rank = (c == color::white)?2:7; //i just love the trinary operator
+        pos.rank = (c == color::white)?'2':'7'; //i just love the trinary operator
         pos.file = 96+i; //ASCII 'a' == 97
         pieces.push_back(Piece(pos, echelon::pawn, qp.back()));
         qp.pop_back();
     }
-    pos.rank = (c == color::white)?1:8;
+    pos.rank = (c == color::white)?'1':'8';
 
     pos.file='a';
     pieces.push_back(Piece(pos, echelon::rook, qp.back()));
@@ -63,14 +63,15 @@ Player::Player(color c) {
 
 }
 
-void Player::move(Position from, Position to) {
+bool Player::move(Position from, Position to) {
 //    std::cout << from.file << from.rank << to.file << to.rank;
     for (Piece& p: pieces) {
         if (p.get_pos() == from) {
             p.set_pos(to);
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 std::vector<Piece>& Player::get_pieces() {

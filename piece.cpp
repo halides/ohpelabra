@@ -1,3 +1,4 @@
+#include <string>
 #include "piece.h"
 #include <iostream>
 #include <algorithm>
@@ -6,17 +7,18 @@ Piece::Piece(Position p, echelon e, echelon qe) {
     try {
         set_pos(p);
     } catch (int e) {
-std::cout << "abua";
         throw;
     }
-    state = true; //alive
+    alive = true; //alive
     has_moved = false; //has not moved yet
+    quantum_known = false;
     ech = e;
     qech = qe;
 }
 
 void Piece::set_pos(Position p) {
-    if (p.file < 'a' || p.file > 'h' || p.rank < 1 || p.rank > 8) {
+    has_moved=true;
+    if (p.file < 'a' || p.file > 'h' || p.rank < '1' || p.rank > '8') {
         throw 2;
     } else {
         pos.rank = p.rank;
@@ -24,35 +26,28 @@ void Piece::set_pos(Position p) {
     }
 }
 
-echelon Piece::get_random_ech() const {
+echelon Piece::get_random_ech() {
     if(rand()%2) {
         return ech;
     } else {
+        quantum_known = true;
         return qech;
     }
-}
-
-void Piece::set_state(bool s) {
-    state = s;
-}
-
-bool Piece::get_state() const {
-    return state;
 }
 
 Position Piece::get_pos() const {
     return pos;
 }
 
-const char* Piece::get_ech() const {
+std::string Piece::get_ech() const {
     return ech_to_str(ech);
 }
 
-const char* Piece::get_qech() const {
+std::string Piece::get_qech() const {
     return ech_to_str(qech);
 }
 
-const char* Piece::ech_to_str(echelon e) const {
+std::string Piece::ech_to_str(echelon e) const {
     switch(e) {
       case echelon::pawn: return "pawn";
       case echelon::knight: return "knight";
