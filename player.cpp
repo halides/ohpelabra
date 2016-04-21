@@ -9,7 +9,7 @@ Player::Player(color c) {
     std::vector<echelon> qp;
 
     for (int i=0; i<8; i++) {
-	qp.push_back(echelon::pawn);
+        qp.push_back(echelon::pawn);
     }
     qp.push_back(echelon::knight);
     qp.push_back(echelon::knight);

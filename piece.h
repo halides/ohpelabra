@@ -1,4 +1,6 @@
+#pragma once
 #include <string>
+
 enum class echelon {pawn, knight, bishop, rook, queen, king};
 
 struct Position {

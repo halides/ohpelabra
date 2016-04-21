@@ -56,6 +56,7 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
                 if (to == p.get_pos()) {
                     if (p.get_ech() == "k") {
                         std::cout << "\n\n\nOMG White player won!\n\n\n";
+                        exit(0);
                     }
                     p.alive=false;
                     break;
@@ -71,6 +72,7 @@ bool Board::move(Position from, Position to, std::vector<Position> moves) {
                 if (to == p.get_pos()) {
                     if (p.get_ech() == "k") {
                         std::cout << "\n\n\nOMG Black player won!\n\n\n";
+                        exit(0);
                     }
                     p.alive=false;
                     break;

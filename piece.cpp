@@ -21,10 +21,18 @@ void Piece::set_pos(Position p) {
     has_moved = true;
     if (p.file < 'a' || p.file > 'h' || p.rank < '1' || p.rank > '8') {
         throw 2;
-    } else {
-        pos.rank = p.rank;
-        pos.file = p.file;
     }
+    pos.rank = p.rank;
+    pos.file = p.file;
+/*    if (last_state == "classic " && ech == echelon::pawn && col == color::white && pos.rank == '8') {
+        update_ech = true;
+    } else if (last_state == "quantum " && qech == echelon::pawn && col == color::white && pos.rank == '8') {
+        update_qech = true;
+    } else if (last_state == "classic " && qech == echelon::pawn && col == color::black && pos.rank == '1') {
+        update_ech = true;
+    } else if (last_state == "quantum " && qech == echelon::pawn && col == color::black && pos.rank == '1') {
+        update_qech = true;
+    }*/
 }
 
 echelon Piece::get_random_ech() {

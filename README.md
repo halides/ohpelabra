@@ -1,6 +1,6 @@
 # ohpelabra
 
-## Trying to build a quantum chess with C++
+## A quantum chess with C++
 
 ### Rules of the game
 
@@ -32,11 +32,6 @@ make clean
 
 Some sort of MVC with a CLI (the CLI might not even be in C++).
 
-Board has two Players, each Player has 16 Pieces, each Piece knows how to move?
-
-- board.getState() gives state of board as a string or whatnot.
-- board.move(player, pos1, pos2)
-
 Hours:
 - 5.4 1h create repo
 - 8.4 1h think about stuff, mod readme
@@ -44,5 +39,5 @@ Hours:
 - 14.4 4h lots of progress, help from a friend
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
-- 20.4 3h fixed bug, pawn movement implemented
-- 21.4 3h all movements implemented, collision check ok, capturing pieces ok
+- 20.4 4h fixed bug (uninitialized variable), pawn movement implemented
+- 21.4 7h all movements implemented, collision check ok, capturing pieces ok. another bad bug which was resolved (return value was a ref but then using it by value anyhow).
