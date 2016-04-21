@@ -19,14 +19,15 @@ Normal chess rules apply with the following changes:
 - if a piece in quantum state on the far row is touched and revealed to be a pawn, it is promoted, but the promotion takes up the turn. the superimposed piece type is not affected.
 
 
-- (a piece in classical state with no legal moves cannot be chosen.) personally i felt this a bit boring and i left in the ability to play the lotto
+(a piece in classical state with no legal moves cannot be chosen.) personally i felt this a bit boring and i left in the ability to play the lotto
 
 
 ### Technical notes
 
-gcc 4.9.2, using C++14. (g++-4.9 -g -Wall -std=c++14)
+gcc 4.9.2, using C++14. (g++-4.9 -g -Wall -std=c++14 -pedantic)
 
 make && ./qchess
+
 make clean
 
 Some sort of MVC with a CLI (the CLI might not even be in C++).
