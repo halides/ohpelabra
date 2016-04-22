@@ -5,7 +5,7 @@
 
 Piece::Piece(Position p, echelon e, echelon qe) {
     try {
-        set_pos(p);
+        set_pos(p, color::white);
     } catch (int e) {
         throw;
     }
@@ -13,26 +13,50 @@ Piece::Piece(Position p, echelon e, echelon qe) {
     has_moved = false; //has not moved yet
     quantum_known = false;
     last_state = "classic ";
+    update_ech = false;
+    update_qech = false;
     ech = e;
     qech = qe;
 }
 
-void Piece::set_pos(Position p) {
+void Piece::update(char s) {
+    if (last_state == "classic ") {
+        if (s == 'q') ech = echelon::queen;
+        else if (s == 'b') ech = echelon::bishop;
+        else if (s == 'n') ech = echelon::knight;
+        else if (s == 'r') ech = echelon::rook;
+        else throw 1;
+    } else {
+        if (s == 'q') qech = echelon::queen;
+        else if (s == 'b') qech = echelon::bishop;
+        else if (s == 'n') qech = echelon::knight;
+        else if (s == 'r') qech = echelon::rook;
+        else throw 1;
+    }
+}
+
+void Piece::reset_update() {
+    update_ech = false;
+    update_qech = false;
+}
+
+void Piece::set_pos(Position p, color col) {
     has_moved = true;
     if (p.file < 'a' || p.file > 'h' || p.rank < '1' || p.rank > '8') {
         throw 2;
     }
     pos.rank = p.rank;
     pos.file = p.file;
-/*    if (last_state == "classic " && ech == echelon::pawn && col == color::white && pos.rank == '8') {
+
+    if (last_state == "classic " && ech == echelon::pawn && col == color::white && pos.rank == '8') {
         update_ech = true;
     } else if (last_state == "quantum " && qech == echelon::pawn && col == color::white && pos.rank == '8') {
         update_qech = true;
-    } else if (last_state == "classic " && qech == echelon::pawn && col == color::black && pos.rank == '1') {
+    } else if (last_state == "classic " && ech == echelon::pawn && col == color::black && pos.rank == '1') {
         update_ech = true;
     } else if (last_state == "quantum " && qech == echelon::pawn && col == color::black && pos.rank == '1') {
         update_qech = true;
-    }*/
+    }
 }
 
 echelon Piece::get_random_ech() {

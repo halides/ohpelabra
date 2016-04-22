@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+enum class color {white, black};
 enum class echelon {pawn, knight, bishop, rook, queen, king};
 
 struct Position {
@@ -28,13 +29,17 @@ class Piece {
     bool quantum_known; //is the quantum echelon known?
     bool alive; //dead or alive
     bool has_moved; //has it moved? important for pawns (and for castling)
+    bool update_ech;
+    bool update_qech;
 
     std::string ech_to_str(echelon) const;
     std::string ech_to_long_str(echelon) const;
 
     Piece(Position, echelon, echelon);
     Piece() {};
-    void set_pos(Position);
+    void update(char);
+    void reset_update();
+    void set_pos(Position, color);
     echelon get_random_ech();
     Position get_pos() const;
     std::string get_ech() const;

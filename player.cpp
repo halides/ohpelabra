@@ -67,7 +67,7 @@ bool Player::move(Position from, Position to) {
 //    std::cout << from.file << from.rank << to.file << to.rank;
     for (Piece& p: pieces) {
         if (p.get_pos() == from) {
-            p.set_pos(to);
+            p.set_pos(to, col);
             return true;
         }
     }

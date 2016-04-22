@@ -17,6 +17,22 @@ Player& Board::get_player(std::string s) {
     }
 }
 
+Piece& Board::need_update() {
+    for(Piece& p: wp.get_pieces()) {
+        if (p.update_ech || p.update_qech) {
+            p.reset_update();
+            return p;
+        }
+    }
+    for(Piece& p: bp.get_pieces()) {
+        if (p.update_ech || p.update_qech) {
+            p.reset_update();
+            return p;
+        }
+    }
+    throw 1;
+}
+
 std::string Board::get_piece_str(Position pos) {
     std::string s;
     for(Piece& p: wp.get_pieces()) {

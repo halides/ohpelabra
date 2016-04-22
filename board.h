@@ -10,6 +10,7 @@ class Board {
     turn t;
   public:
     Board();
+    Piece& need_update();
     Player& get_player(std::string);
     std::vector<Position> get_moves(echelon, Piece&);
     Piece& select(Position);

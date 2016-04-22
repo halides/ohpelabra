@@ -4,15 +4,17 @@
 
 ### Rules of the game
 
-http://research.cs.queensu.ca/Parallel/QuantumChess/QuantumChess.html
+There are many different rule sets for quantum chess. These rules were chosen as they felt the easiest to implement, given also that I have never implemented a chess in any language :-)
+
+The rules are from http://research.cs.queensu.ca/Parallel/QuantumChess/QuantumChess.html. I never could get that Java-applet to run so I didn't get to try the game out. 
 
 Normal chess rules apply with the following changes:
 - each piece (except the king) has in addition to it's normal value a randomly chosen quantum value from the collection of 8 pawns, 2 rooks, 2 knights, 2 bishops and 1 queen.
-- when a player wants to move, he chooses a piece. that piece has a 50-50 chance of being the normal piece or the quantum piece for that move. the player has to move that piece and it automatically goes back to normal after the move.
+- when a player wants to move, he chooses a piece. that piece has a 50-50 chance of collapsing to a classic piece or a quantum piece for that move. the player has to move that piece.
 - if a piece collapses into a type with no possible moves, then the player’s turn is over.
 - the quantum value is not known by either player until a piece randomly collapses to a quantum piece.
 - there is no "check" or "checkmate". the king is a piece that is captured as any other piece and this is a win condition.
-- the king can be played into and left in check.
+- so, the king can be played into and left in check.
 - castling is not allowed.
 - there is no "en passant"-rule.
 - a pawn reaching the last rank is promoted. this promotion is for it's current state.
@@ -28,10 +30,6 @@ gcc 4.9.2, using C++14. (g++-4.9 -g -Wall -std=c++14 -pedantic)
 
 make && ./qchess
 
-make clean
-
-Some sort of MVC with a CLI (the CLI might not even be in C++).
-
 Hours:
 - 5.4 1h create repo
 - 8.4 1h think about stuff, mod readme
@@ -39,5 +37,5 @@ Hours:
 - 14.4 4h lots of progress, help from a friend
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
-- 20.4 4h fixed bug (uninitialized variable), pawn movement implemented
-- 21.4 9h all movements implemented, collision check ok, capturing pieces ok. another bad bug which was resolved (return value was a ref but then using it by value anyhow).
+- 20.4 4h help from a friend, he found the bug - uninitialized variable. pawn movement implemented
+- 21.4 9h all movements implemented, collision check ok, capturing pieces ok. another bad bug found and resolved, return value was a ref but then using it by value anyhow. third bad bug - forgot to check if piece was alive in some operations, resolved by removing dead pieces from the vectors. thus bool alive is redundant

@@ -2,8 +2,6 @@
 #include <vector>
 #include "piece.h"
 
-enum class color {white, black};
-
 class Player {
     color col;
   public:
