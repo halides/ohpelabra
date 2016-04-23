@@ -38,5 +38,5 @@ Hours:
 - 18.4 3h piece movement
 - 19.4 3h collision, running into a bad bug
 - 20.4 4h help from a friend, he found the bug - uninitialized variable. pawn movement implemented
-- 21.4 9h all movements implemented, collision check ok, capturing pieces ok. another bad bug found and resolved - return value was a ref but then using it by value anyhow. third big bug - forgot to check if piece was alive in some operations, resolved by removing dead pieces from the vector<Piece>s. thus bool alive is redundant.
+- 21.4 9h all movements implemented, collision check ok, capturing pieces ok. another bad bug found and resolved - return value was a ref but then using it by value anyhow. third bigger bug - forgot to check if piece was alive in some operations; resolved by removing dead pieces from the vector<Piece>s. thus bool alive is redundant.
 - 22.4 3h pawn promotion done! the game is complete and seems to be bug-free. next up: tests and refactoring.
