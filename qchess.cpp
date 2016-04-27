@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 void print_board(Board&);
+void update_piece(Piece&);
 
 int main () {
     Board b;
@@ -22,52 +23,21 @@ int main () {
             try {
               pos = {input.at(0), input.at(1)};
             } catch (const std::out_of_range& oor) {
-              std::cout << "You made a boo-boo, try again\n";
+              std::cout << "You made a boo-boo, try again: ";
               continue;
             }
             while (true) {
+                //select a piece
                 std::vector<Position> moves;
                 try {
                     Piece& p = b.select(pos);
                     echelon ech = p.get_random_ech();
                     if (ech == echelon::pawn && b.get_turn() == "black" && p.get_pos().rank == '1') {
-                        std::cout << "Wow! You can upgrade that piece! What do you wanna upgrade to? q/b/n/r: ";
-                        getline(std::cin, input);
-                        while (true) {
-                            try {
-                                p.update(input.at(0));
-                            } catch (const std::out_of_range& oor) {
-                                std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                                getline(std::cin, input);
-                                continue;
-                            } catch (int e) {
-                                std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                                getline(std::cin, input);
-                                continue;
-                            }
-                            break;
-                        }
-                        std::cout << input << " it is then!\n";
+                        update_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
-                    } else if (ech == echelon::pawn && p.get_pos().rank == '8') {
-                        std::cout << "Wow! You can upgrade that piece! What do you wanna upgrade to? q/b/n/r: ";
-                        getline(std::cin, input);
-                        while (true) {
-                            try {
-                                p.update(input.at(0));
-                            } catch (const std::out_of_range& oor) {
-                                std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                                getline(std::cin, input);
-                                continue;
-                            } catch (int e) {
-                                std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                                getline(std::cin, input);
-                                continue;
-                            }
-                            break;
-                        }
-                        std::cout << input << " it is then!\n";
+                    } else if (ech == echelon::pawn && b.get_turn() == "white" && p.get_pos().rank == '8') {
+                        update_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
                     }
@@ -86,6 +56,7 @@ int main () {
                     std::cout << "I'm sorry, what?\n";
                     break;
                 }
+                //when a proper piece is selected, move it
                 std::cout << "\nWhere do you want to move it to: ";
                 getline(std::cin, input);
                 while (true) {
@@ -106,25 +77,10 @@ int main () {
                     }
                     break;
                 }
+                //check for pawn promotion
                 try {
                     Piece& p = b.need_update();
-                    std::cout << "Wow! You can upgrade that piece! What do you wanna upgrade to? q/b/n/r: ";
-                    getline(std::cin, input);
-                    while (true) {
-                        try {
-                            p.update(input.at(0));
-                        } catch (const std::out_of_range& oor) {
-                            std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                            getline(std::cin, input);
-                            continue;
-                        } catch (int e) {
-                            std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Update to: ";
-                            getline(std::cin, input);
-                            continue;
-                        }
-                        break;
-                    }
-                    std::cout << input << " it is then!\n";
+                    update_piece(p);
                 } catch (int e)  {
                 }
                 print_board(b);
@@ -133,8 +89,30 @@ int main () {
        } else
         std::cout << "?";
 end_of_main_loop:
+        print_board(b);
         std::cout << "\nTurn for " << b.get_turn() <<": ";
     }
+}
+
+void update_piece(Piece& p) {
+    std::string input;
+    std::cout << "Wow! You can upgrade that piece! What do you wanna upgrade to? q/b/n/r: ";
+    getline(std::cin, input);
+    while (true) {
+        try {
+            p.update(input.at(2));
+        } catch (const std::out_of_range& oor) {
+            std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Update to: ";
+            getline(std::cin, input);
+            continue;
+        } catch (int e) {
+            std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Update to: ";
+            getline(std::cin, input);
+            continue;
+        }
+        break;
+    }
+    std::cout << input << " it is then!\n";
 }
 
 void print_board(Board& b) {
@@ -151,17 +129,20 @@ void print_board(Board& b) {
     std::cout << "\n";//*/
     std::cout << "    .------.------.------.------.------.------.------.------.\n";
     std::cout << "    |      |      |      |      |      |      |      |      |\n";
-    for (char c = '8'; c >= '1'; c--) {
+    for (char c = '8'; c >= '1'; --c) {
         std::cout << " " << c << "  |  ";
-        for (char d = 'a'; d <= 'h'; d++) {
+        for (char d = 'a'; d <= 'h'; ++d) {
             Position pos {d,c};
             std::cout << b.get_piece_str(pos);
             std::cout << "  |";
             if (d < 'h') std::cout << "  ";
         }
         std::cout << "\n    |      |      |      |      |      |      |      |      |\n";
-        std::cout <<   "    .------.------.------.------.------.------.------.------.\n";
-        if (c == '1') break;
+        if (c == '1') {
+            std::cout <<   "    .------.------.------.------.------.------.------.------.\n";
+            break;
+        }
+        std::cout << "    .------+------+------+------+------+------+------+------.\n";
         std::cout << "    |      |      |      |      |      |      |      |      |\n";
     }
     std::cout << "\n       a      b      c      d      e      f      g      h\n";

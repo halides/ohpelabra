@@ -1,5 +1,5 @@
-CC = g++-4.9
-CFLAGS = -g -std=c++14 -Wall -pedantic
+CC = g++
+CFLAGS = -std=c++11 -Wpedantic
 
 all: qchess.cpp piece.cpp player.cpp board.cpp
 	$(CC) $(CFLAGS) -o qchess qchess.cpp piece.cpp player.cpp board.cpp
