@@ -8,6 +8,8 @@ class Board {
     Player wp;
     Player bp;
     turn t;
+    void bishop_moves(std::vector<Position>&, Position&, sqr_state);
+    void rook_moves(std::vector<Position>&, Position&, sqr_state);
   public:
     Board();
     Piece& need_update();

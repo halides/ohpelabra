@@ -143,237 +143,181 @@ sqr_state Board::is_free(Position pos) {
     return sqr_state::free;
 }
 
+void Board::bishop_moves(std::vector<Position>& poses, Position& pos, sqr_state sqr_st_opp) {
+    Position tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file++; tmpos.rank++;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file++; tmpos.rank--;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file--; tmpos.rank++;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file--; tmpos.rank--;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+}
+
+void Board::rook_moves(std::vector<Position>& poses, Position& pos, sqr_state sqr_st_opp) {
+    Position tmpos = {static_cast<char>(pos.file+1), pos.rank};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file++;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {static_cast<char>(pos.file-1), pos.rank};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.file--;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {pos.file, static_cast<char>(pos.rank+1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.rank++;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+
+    tmpos = {pos.file, static_cast<char>(pos.rank-1)};
+    while(is_free(tmpos) == sqr_state::free) {
+        poses.push_back(tmpos);
+        tmpos.rank--;
+    }
+    if (is_free(tmpos) == sqr_st_opp)
+        poses.push_back(tmpos);
+}
+
 std::vector<Position> Board::get_moves(echelon e, Piece& p) {
     std::vector<Position> poses;
     Position pos = p.get_pos();
     Position tmpos;
     sqr_state sqr_st_opp;
-    int pawn_dir = 1;
+    char pawn_dir = 1; //move white player rank forward, black backward
     if (t == turn::white) {
         sqr_st_opp = sqr_state::black;
     } else if (t == turn::black) {
         sqr_st_opp = sqr_state::white;
         pawn_dir = -1;
     }
-        switch(e) {
-          case echelon::pawn:
-            tmpos = {pos.file, static_cast<char>(pos.rank+pawn_dir)};
-            if (is_free(tmpos) == sqr_state::free) {
+   switch(e) {
+      case echelon::pawn:
+        tmpos = {pos.file, static_cast<char>(pos.rank+pawn_dir)};
+        if (is_free(tmpos) == sqr_state::free) {
+            poses.push_back(tmpos);
+            if(!p.has_moved) {
+                tmpos = {pos.file, static_cast<char>(pos.rank+pawn_dir+pawn_dir)};
+                if (is_free(tmpos) == sqr_state::free)
                 poses.push_back(tmpos);
-                if(!p.has_moved) {
-                    tmpos = {pos.file, static_cast<char>(pos.rank+pawn_dir+pawn_dir)};
-                    if (is_free(tmpos) == sqr_state::free)
-                    poses.push_back(tmpos);
-                }
             }
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+pawn_dir)};
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+pawn_dir)};
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            
-            break;
-
-          case echelon::knight:
-            tmpos = {static_cast<char>(pos.file+2), static_cast<char>(pos.rank+1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file+2), static_cast<char>(pos.rank-1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file-2), static_cast<char>(pos.rank+1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file-2), static_cast<char>(pos.rank-1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-2)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-2)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+2)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+2)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-            break;
-
-          case echelon::bishop:
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++; tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++; tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--; tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--; tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            break;
-
-          case echelon::rook:
-            tmpos = {static_cast<char>(pos.file+1), pos.rank};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), pos.rank};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            break;
-
-          case echelon::queen:
-            tmpos = {static_cast<char>(pos.file+1), pos.rank};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), pos.rank};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++; tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file++; tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--; tmpos.rank++;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-1)};
-            while(is_free(tmpos) == sqr_state::free) {
-                poses.push_back(tmpos);
-                tmpos.file--; tmpos.rank--;
-            }
-            if (is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            break;
-
-          case echelon::king:
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), pos.rank};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank+1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), pos.rank};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            tmpos = {pos.file, static_cast<char>(pos.rank-1)};
-            if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
-                poses.push_back(tmpos);
-
-            break;
-          default:;
         }
+        tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+pawn_dir)};
+        if (is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+pawn_dir)};
+        if (is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        
+      break;
+
+      case echelon::knight:
+        tmpos = {static_cast<char>(pos.file+2), static_cast<char>(pos.rank+1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file+2), static_cast<char>(pos.rank-1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file-2), static_cast<char>(pos.rank+1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file-2), static_cast<char>(pos.rank-1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-2)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-2)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+2)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+        tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+2)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+      break;
+
+      case echelon::bishop:
+        bishop_moves(poses, pos, sqr_st_opp);
+      break;
+
+      case echelon::rook:
+        rook_moves(poses, pos, sqr_st_opp);
+      break;
+
+      case echelon::queen:
+        bishop_moves(poses, pos, sqr_st_opp);
+        rook_moves(poses, pos, sqr_st_opp);
+      break;
+
+      case echelon::king:
+        tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank-1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {static_cast<char>(pos.file-1), pos.rank};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {static_cast<char>(pos.file-1), static_cast<char>(pos.rank+1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {pos.file, static_cast<char>(pos.rank+1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank+1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {static_cast<char>(pos.file+1), pos.rank};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {static_cast<char>(pos.file+1), static_cast<char>(pos.rank-1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+
+        tmpos = {pos.file, static_cast<char>(pos.rank-1)};
+        if (is_free(tmpos) == sqr_state::free || is_free(tmpos) == sqr_st_opp)
+            poses.push_back(tmpos);
+      break;
+
+      default:;
+    }
     return poses;
 }
