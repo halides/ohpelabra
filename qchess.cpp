@@ -89,7 +89,6 @@ int main () {
        } else
         std::cout << "?";
 end_of_main_loop:
-        print_board(b);
         std::cout << "\nTurn for " << b.get_turn() <<": ";
     }
 }

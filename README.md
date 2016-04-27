@@ -4,7 +4,7 @@
 
 ### Rules of the game
 
-There are many different rule sets for quantum chess. These rules were chosen as they felt the easiest to implement, given also that I have never implemented a chess in any language :-)
+There are many different rule sets for quantum chess. These rules were chosen as they felt easy to implement, given also that I have never implemented a normal chess in any language :-)
 
 The rules are from http://research.cs.queensu.ca/Parallel/QuantumChess/QuantumChess.html. I never could get that Java-applet to run so I didn't get to try the game out. 
 
@@ -26,7 +26,7 @@ Normal chess rules apply with the following changes:
 
 ### Technical notes
 
-gcc 4.9.2, using C++14. (g++-4.9 -g -Wall -std=c++14 -pedantic)
+gcc 4.9.2 was used for development (g++-4.9 -Wpedantic -std=c++14). Compiles also with gcc 4.8.x: g++-4.8 -Wpedantic -std=c++11.
 
 make && ./qchess
 
