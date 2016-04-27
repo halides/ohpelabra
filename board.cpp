@@ -17,16 +17,16 @@ Player& Board::get_player(std::string s) {
     }
 }
 
-Piece& Board::need_update() {
+Piece& Board::need_promote() {
     for(Piece& p: wp.get_pieces()) {
-        if (p.update_ech || p.update_qech) {
-            p.reset_update();
+        if (p.promote_ech || p.promote_qech) {
+            p.reset_promote();
             return p;
         }
     }
     for(Piece& p: bp.get_pieces()) {
-        if (p.update_ech || p.update_qech) {
-            p.reset_update();
+        if (p.promote_ech || p.promote_qech) {
+            p.reset_promote();
             return p;
         }
     }

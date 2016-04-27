@@ -13,13 +13,13 @@ Piece::Piece(Position p, echelon e, echelon qe) {
     has_moved = false; //has not moved yet
     quantum_known = false;
     last_state = "classic ";
-    update_ech = false;
-    update_qech = false;
+    promote_ech = false;
+    promote_qech = false;
     ech = e;
     qech = qe;
 }
 
-void Piece::update(char s) {
+void Piece::promote(char s) {
     if (last_state == "classic ") {
         if (s == 'q') ech = echelon::queen;
         else if (s == 'b') ech = echelon::bishop;
@@ -35,9 +35,9 @@ void Piece::update(char s) {
     }
 }
 
-void Piece::reset_update() {
-    update_ech = false;
-    update_qech = false;
+void Piece::reset_promote() {
+    promote_ech = false;
+    promote_qech = false;
 }
 
 void Piece::set_pos(Position p, color col) {
@@ -49,13 +49,13 @@ void Piece::set_pos(Position p, color col) {
     pos.file = p.file;
 
     if (last_state == "classic " && ech == echelon::pawn && col == color::white && pos.rank == '8') {
-        update_ech = true;
+        promote_ech = true;
     } else if (last_state == "quantum " && qech == echelon::pawn && col == color::white && pos.rank == '8') {
-        update_qech = true;
+        promote_qech = true;
     } else if (last_state == "classic " && ech == echelon::pawn && col == color::black && pos.rank == '1') {
-        update_ech = true;
+        promote_ech = true;
     } else if (last_state == "quantum " && qech == echelon::pawn && col == color::black && pos.rank == '1') {
-        update_qech = true;
+        promote_qech = true;
     }
 }
 

@@ -12,7 +12,7 @@ class Board {
     void rook_moves(std::vector<Position>&, Position&, sqr_state);
   public:
     Board();
-    Piece& need_update();
+    Piece& need_promote();
     Player& get_player(std::string);
     std::vector<Position> get_moves(echelon, Piece&);
     Piece& select(Position);

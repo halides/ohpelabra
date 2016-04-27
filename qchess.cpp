@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 void print_board(Board&);
-void update_piece(Piece&);
+void promote_piece(Piece&);
 
 int main () {
     Board b;
@@ -33,11 +33,11 @@ int main () {
                     Piece& p = b.select(pos);
                     echelon ech = p.get_random_ech();
                     if (ech == echelon::pawn && b.get_turn() == "black" && p.get_pos().rank == '1') {
-                        update_piece(p);
+                        promote_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
                     } else if (ech == echelon::pawn && b.get_turn() == "white" && p.get_pos().rank == '8') {
-                        update_piece(p);
+                        promote_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
                     }
@@ -79,8 +79,8 @@ int main () {
                 }
                 //check for pawn promotion
                 try {
-                    Piece& p = b.need_update();
-                    update_piece(p);
+                    Piece& p = b.need_promote();
+                    promote_piece(p);
                 } catch (int e)  {
                 }
                 print_board(b);
@@ -93,13 +93,13 @@ end_of_main_loop:
     }
 }
 
-void update_piece(Piece& p) {
+void promote_piece(Piece& p) {
     std::string input;
     std::cout << "Wow! You can upgrade that piece! What do you wanna upgrade to? q/b/n/r: ";
     getline(std::cin, input);
     while (true) {
         try {
-            p.update(input.at(2));
+            p.promote(input.at(2));
         } catch (const std::out_of_range& oor) {
             std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Update to: ";
             getline(std::cin, input);

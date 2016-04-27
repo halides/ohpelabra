@@ -29,16 +29,16 @@ class Piece {
     bool quantum_known; //is the quantum echelon known?
     bool alive; //dead or alive
     bool has_moved; //has it moved? important for pawns (and for castling)
-    bool update_ech;
-    bool update_qech;
+    bool promote_ech;
+    bool promote_qech;
 
     std::string ech_to_str(echelon) const;
     std::string ech_to_long_str(echelon) const;
 
     Piece(Position, echelon, echelon);
     Piece() {};
-    void update(char);
-    void reset_update();
+    void promote(char);
+    void reset_promote();
     void set_pos(Position, color);
     echelon get_random_ech();
     Position get_pos() const;
