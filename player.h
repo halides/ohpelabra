@@ -3,7 +3,9 @@
 #include "piece.h"
 
 class Player {
+  private:
     color col;
+    void put_qp(std::vector<Piece>&, Position&, echelon, std::vector<echelon>&);
   public:
     std::vector<Piece> pieces;
     Player(){} //either or, board.cpp

@@ -34,37 +34,34 @@ Player::Player(color c) {
     pos.rank = (c == color::white)?'1':'8';
 
     pos.file='a';
-    pieces.push_back(Piece(pos, echelon::rook, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::rook, qp);
     pos.file='h';
-    pieces.push_back(Piece(pos, echelon::rook, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::rook, qp);
 
 
     pos.file='b';
-    pieces.push_back(Piece(pos, echelon::knight, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::knight, qp);
     pos.file='g';
-    pieces.push_back(Piece(pos, echelon::knight, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::knight, qp);
 
     pos.file='c';
-    pieces.push_back(Piece(pos, echelon::bishop, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::bishop, qp);
     pos.file='f';
-    pieces.push_back(Piece(pos, echelon::bishop, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::bishop, qp);
 
     pos.file='d';
-    pieces.push_back(Piece(pos, echelon::queen, qp.back()));
-    qp.pop_back();
+    put_qp(pieces, pos, echelon::queen, qp);
     pos.file='e';
-    pieces.push_back(Piece(pos, echelon::king, echelon::king));
+    put_qp(pieces, pos, echelon::king, qp);
 
 }
 
+void Player::put_qp(std::vector<Piece>& pieces, Position& pos, echelon ech, std::vector<echelon>& qp) {
+    pieces.push_back(Piece(pos, ech, qp.back()));
+    qp.pop_back();
+}
+
 bool Player::move(Position from, Position to) {
-//    std::cout << from.file << from.rank << to.file << to.rank;
     for (Piece& p: pieces) {
         if (p.get_pos() == from) {
             p.set_pos(to, col);

@@ -26,7 +26,7 @@ void Piece::update(char s) {
         else if (s == 'n') ech = echelon::knight;
         else if (s == 'r') ech = echelon::rook;
         else throw 1;
-    } else {
+    } else if (last_state == "quantum ") {
         if (s == 'q') qech = echelon::queen;
         else if (s == 'b') qech = echelon::bishop;
         else if (s == 'n') qech = echelon::knight;
