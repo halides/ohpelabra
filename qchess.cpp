@@ -32,6 +32,7 @@ int main () {
                 try {
                     Piece& p = b.select(pos);
                     echelon ech = p.get_random_ech();
+                    //if selected piece is a pawn and on the last rank, promote it
                     if (ech == echelon::pawn && b.get_turn() == "black" && p.get_pos().rank == '1') {
                         promote_piece(p);
                         b.give_turn();
