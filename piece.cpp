@@ -11,8 +11,8 @@ Piece::Piece(Position p, echelon e, echelon qe) {
     }
     alive = true; //alive
     has_moved = false; //has not moved yet
-    quantum_known = false;
-    last_state = "classic ";
+    quantum_known = false; //we don't know the qech yet
+    last_state = "classic "; //nice stringy implementation
     promote_ech = false;
     promote_qech = false;
     ech = e;

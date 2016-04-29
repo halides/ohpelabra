@@ -31,7 +31,7 @@ gcc 4.9.2 was used for development (g++-4.9 -Wpedantic -std=c++14). Compiles als
 make && ./qchess
 
 - no known bugs
-- class player is a bit of a moot abstraction, it's basically a container and initializer for the pieces. but i left it there as it might become a handier abstraction if the game is networked
+- class player is a moot abstraction - a container and initializer for the pieces. but i left it there as it might become a handier abstraction if the game is networked (and refactoring time)
 
 Hours:
 - 5.4 1h create repo

@@ -6,7 +6,7 @@ Player::Player(color c) {
     pcolor = c;
 
     Position pos;
-    std::vector<echelon> qp;
+    std::vector<echelon> qp; //vector for the quantum positions
 
     for (int i=0; i<8; i++) {
         qp.push_back(echelon::pawn);
@@ -19,6 +19,7 @@ Player::Player(color c) {
     qp.push_back(echelon::rook);
     qp.push_back(echelon::queen);
 
+    //random_shuffle sort of sucks :-)
     srand(time(0));
     if (pcolor == color::white) {
         std::random_shuffle(qp.begin(), qp.end());
@@ -27,7 +28,7 @@ Player::Player(color c) {
 
     for (int i=1; i<9; i++) {
         pos.rank = (pcolor == color::white)?'2':'7'; //i just love the trinary operator
-        pos.file = 96+i; //ASCII 'a' == 97
+        pos.file = 96+i; //ASCII 'a' == 97. i just love low-level code
         pieces.push_back(Piece(pos, echelon::pawn, qp.back()));
         qp.pop_back();
     }
@@ -52,8 +53,8 @@ Player::Player(color c) {
     pos.file='d';
     put_qp(pieces, pos, echelon::queen, qp);
     pos.file='e';
+    qp.push_back(echelon::king); //heh
     put_qp(pieces, pos, echelon::king, qp);
-
 }
 
 void Player::put_qp(std::vector<Piece>& pieces, Position& pos, echelon ech, std::vector<echelon>& qp) {
@@ -71,6 +72,7 @@ bool Player::move(Position from, Position to) {
     return false;
 }
 
+//this could be refactored out but i'm pretty sure too much stuff will blow up and thus take too much time
 std::vector<Piece>& Player::get_pieces() {
     return pieces;
 }
