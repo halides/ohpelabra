@@ -20,6 +20,7 @@ struct Position {
 };
 
 class Piece {
+  private:
     Position pos;
     echelon ech;
     echelon qech; //quantum echelon

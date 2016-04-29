@@ -3,7 +3,7 @@
 #include <algorithm>
 
 Player::Player(color c) {
-    col = c;
+    pcolor = c;
 
     Position pos;
     std::vector<echelon> qp;
@@ -20,18 +20,18 @@ Player::Player(color c) {
     qp.push_back(echelon::queen);
 
     srand(time(0));
-    if (c == color::white) {
+    if (pcolor == color::white) {
         std::random_shuffle(qp.begin(), qp.end());
     }
     std::random_shuffle(qp.begin(), qp.end());
 
     for (int i=1; i<9; i++) {
-        pos.rank = (c == color::white)?'2':'7'; //i just love the trinary operator
+        pos.rank = (pcolor == color::white)?'2':'7'; //i just love the trinary operator
         pos.file = 96+i; //ASCII 'a' == 97
         pieces.push_back(Piece(pos, echelon::pawn, qp.back()));
         qp.pop_back();
     }
-    pos.rank = (c == color::white)?'1':'8';
+    pos.rank = (pcolor == color::white)?'1':'8';
 
     pos.file='a';
     put_qp(pieces, pos, echelon::rook, qp);
@@ -64,7 +64,7 @@ void Player::put_qp(std::vector<Piece>& pieces, Position& pos, echelon ech, std:
 bool Player::move(Position from, Position to) {
     for (Piece& p: pieces) {
         if (p.get_pos() == from) {
-            p.set_pos(to, col);
+            p.set_pos(to, pcolor);
             return true;
         }
     }

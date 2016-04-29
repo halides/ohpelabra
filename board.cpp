@@ -136,6 +136,7 @@ std::string Board::get_turn() {
     else if (t == turn::black) return "black";
 }
 
+//status of a position, used by collision check
 sqr_state Board::sqr_status(Position pos) {
    if (pos.file < 'a' || pos.file > 'h' || pos.rank < '1' || pos.rank > '8') return sqr_state::illegal;
    for (Piece& p: wp.get_pieces()) {

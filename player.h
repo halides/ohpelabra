@@ -4,7 +4,7 @@
 
 class Player {
   private:
-    color col;
+    color pcolor;
     void put_qp(std::vector<Piece>&, Position&, echelon, std::vector<echelon>&);
   public:
     std::vector<Piece> pieces;
