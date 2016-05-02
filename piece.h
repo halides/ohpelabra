@@ -8,12 +8,12 @@ struct Position {
     char file; //a-h
     char rank; //1-8
 
-    bool operator==(const Position rhs) {
+    bool operator==(const Position& rhs) {
          if (rank == rhs.rank && file == rhs.file) return true;
          return false;
     }
 
-    Position& operator=(const Position rhs) {
+    Position& operator=(const Position& rhs) {
          file = rhs.file; rank = rhs.rank;
          return *this;
     } //this is unnecessary, the compiler does this
