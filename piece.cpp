@@ -1,5 +1,5 @@
+#include "header/piece.h"
 #include <string>
-#include "piece.h"
 #include <iostream>
 #include <algorithm>
 
