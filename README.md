@@ -26,7 +26,7 @@ Normal chess rules apply with the following changes:
 
 ### Technical notes
 
-gcc 4.9.2 was used for development (g++-4.9 -Wpedantic -std=c++14). Compiles also with gcc 4.8.x: g++-4.8 -Wpedantic -std=c++11.
+gcc 4.9.2 was used for development (g++-4.9 -Wpedantic -std=c++14). Compiles also with gcc 4.8.x: g++-4.8 -Wpedantic -std=c++11. I have heard it compiled on some modern version of Windows with Code::Blocks.
 
 make && ./qchess
 
