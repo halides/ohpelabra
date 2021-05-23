@@ -55,28 +55,18 @@ int main(int argc, char *argv[])
 printf("Connect ok\n");
 
     while (1) {
-        printf("alku\n" );
 
 	bzero(buffer,3356);
-        n = read(sockfd, buffer, 3355);
+        n = recv(sockfd, buffer, 3355,0);
         if (n < 0) 
             error("ERROR reading from socket");
-        printf("%s\n", buffer);
-
-	bzero(buffer,3356);
-        n = read(sockfd, buffer, 3355);
-        if (n < 0) 
-            error("ERROR reading from socket");
-        printf("%s\n", buffer);
-
+        printf("%s", buffer);
 	
-        printf("keski\n" );
 	bzero(buffer,3356);
         fgets(buffer,3355,stdin);
            n = write(sockfd, buffer, strlen(buffer));
         if (n < 0)
         error("ERROR writing to socket");
-        printf("loppu\n" );
     }
     close(sockfd);
     return 0;
