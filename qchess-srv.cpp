@@ -14,7 +14,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-void print_board(Board&);
+std::string print_board(Board&);
 void promote_piece(Piece&);
 
 void error(const char *msg)
@@ -24,9 +24,10 @@ void error(const char *msg)
 }
 
 int main (int argc, char* argv[]) {
-    int sockfd, newsockfd, portno;
+    int sockfd, sockfd1, sockfd2, portno;
     socklen_t clilen;
-    char buffer[256];
+    char buffer[3356];
+    bzero(buffer,3356);
     struct sockaddr_in serv_addr, cli_addr;
     int n;
  
@@ -63,7 +64,7 @@ int main (int argc, char* argv[]) {
      // This bind() call will bind  the socket to the current IP address on port, portno
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) 
         error("ERROR on binding");
-
+printf("BIND ok, waiting for clients...\n");
      // This listen() call tells the socket to listen to the incoming connections.
      // The listen() function places all incoming connection into a backlog queue
      // until accept() call accepts the connection.
@@ -79,53 +80,75 @@ int main (int argc, char* argv[]) {
      // So, the original socket file descriptor can continue to be used 
      // for accepting new connections while the new socker file descriptor is used for
      // communicating with the connected client.
-    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-    if (newsockfd < 0) 
+    sockfd1 = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+    if (sockfd1 < 0) 
           error("ERROR on accept");
 
     printf("server: got connection from %s port %d\n", inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
+    send(sockfd1, "Hello, you play white!\nWaiting for opponent...", 3356, 0);
 
+    sockfd2 = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+    if (sockfd2 < 0) 
+          error("ERROR on accept");
 
-     // This send() function sends the 13 bytes of the string to the new socket
-    send(newsockfd, "Hello, world!\n", 13, 0);
-
-    bzero(buffer,256);
-
-    n = read(newsockfd,buffer,255);
-    if (n < 0) error("ERROR reading from socket");
-    printf("Here is the message: %s\n",buffer);
-
-    close(newsockfd);
-    close(sockfd);
-    return 0; 
-
-
+    printf("server: got connection from %s port %d\n", inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
+    send(sockfd2, "Hello, you play black!", 3356, 0);
 
     Board b;
     std::string input;
-    print_board(b);
+    std::string to_send;
 
-    std::cout << "\nTurn for " << b.get_turn() <<": ";
-    while (getline(std::cin, input)) {
-        if (input == "quit") break;
-        if (input == "p") {
-            print_board(b);
-        } else if (input[0] >= 'a' && input[0] <= 'h') {
+
+
+
+
+
+
+
+
+
+
+
+
+    while(1) {
+	    to_send = "";
+        bzero(buffer,3356);
+	if (b.get_turn() == "white") {
+		send(sockfd1, print_board(b).c_str(), 3356, 0);
+	    read(sockfd1,buffer,255);
+	} else {
+		send(sockfd2, print_board(b).c_str(), 3356, 0);
+	    read(sockfd2,buffer,255);
+	}
+	input = buffer;
+	if (!input.empty() && input[input.length()-1] == '\n') {
+          input.erase(input.length()-1);
+        }
+	std::cout << " -- Input: >" << input << "<\n";
+
+
+	if (input[0] >= 'a' && input[0] <= 'h') {
             Position pos;
             try {
               pos = {input.at(0), input.at(1)};
             } catch (const std::out_of_range& oor) {
-              std::cout << "You made a boo-boo, try again: ";
+/*        if (b.get_turn() == "white") 
+		send(sockfd1, "Try again", 3356, 0);
+	      else
+		send(sockfd2, "Try again", 3356, 0);*/
               continue;
             }
+	    std::cout << "pos: " << input.at(0) << input.at(1) << "\n";
             while (true) {
-                //select a piece
+		    to_send="";
+
+         //select a piece
                 std::vector<Position> moves;
                 try {
                     Piece& p = b.select(pos);
                     echelon ech = p.get_random_ech();
                     //if selected piece is a pawn and on the last rank, promote it
-                    if (ech == echelon::pawn && b.get_turn() == "black" && p.get_pos().rank == '1') {
+/*                    if (ech == echelon::pawn && b.get_turn() == "black" && p.get_pos().rank == '1') {
                         promote_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
@@ -133,56 +156,81 @@ int main (int argc, char* argv[]) {
                         promote_piece(p);
                         b.give_turn();
                         goto end_of_main_loop;
-                    }
-                    std::cout << "The piece is a " << p.ech_to_long_str(ech) << "\n";
+                    }*/
+                    to_send = "The piece is a "; to_send += p.ech_to_long_str(ech); to_send += "\n";
                     moves = b.get_moves(ech,p);
                     if (moves.empty()) {
-                        std::cout << "I'm sorry, the piece has no legal moves!\nYou lose your turn!";
+                        to_send += "I'm sorry, the piece has no legal moves!\nYou lose your turn!";
+			if (b.get_turn() == "white")
+                send(sockfd1, to_send.c_str(), 3356, 0);
+              else
+                send(sockfd2, to_send.c_str(), 3356, 0);
                         b.give_turn();
                         break;
                     }
-                    std::cout << "Allowed moves: ";
+                    to_send += "Allowed moves: ";
                     for (Position pose: moves) {
-                        std::cout << pose.file << pose.rank << " ";
+                        to_send += pose.file; to_send += pose.rank; to_send += " ";
                     }
                 } catch(int e) {
-                    std::cout << "I'm sorry, what?\n";
+        if (b.get_turn() == "white")
+		    send(sockfd1, "Try again", 3356, 0);
+	else
+		    send(sockfd2, "Try again", 3356, 0);
                     break;
                 }
+//		to_send += "\nPlease hit enter";
+		if (b.get_turn() == "white")
+                send(sockfd1, to_send.c_str(), 3356, 0);
+              else
+                send(sockfd2, to_send.c_str(), 3356, 0);
+
                 //when a proper piece is selected, move it
-                std::cout << "\nWhere do you want to move it to: ";
-                getline(std::cin, input);
                 while (true) {
+        bzero(buffer,3356);
+       	if (b.get_turn() == "white") {
+		    send(sockfd1, "Where to: ", 3356, 0);
+	    read(sockfd1,buffer,255);
+	} else {
+		    send(sockfd2, "Where to:", 3356, 0);
+	    read(sockfd2,buffer,255);
+	}
+	input = buffer;
+	if (!input.empty() && input[input.length()-1] == '\n') {
+          input.erase(input.length()-1);
+        }
+	std::cout << " -- Input: >" << input << "<\n";
+
                     try {
                         if (!(b.move(pos, Position {input.at(0), input.at(1)}, moves))) {
-                            std::cout << "(mov)I'm sorry Dave, I can't allow you to do that. Where to: ";
-                            getline(std::cin, input);
+//                            std::cout << "(mov)I'm sorry Dave, I can't allow you to do that. Where to: ";
+  //                          getline(std::cin, input);
                             continue;
                         }
                     } catch (const std::out_of_range& oor) {
-                        std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Where to: ";
-                        getline(std::cin, input);
+  //                      std::cout << "(oor)I'm sorry Dave, I can't allow you to do that. Where to: ";
+    //                    getline(std::cin, input);
                         continue;
                     } catch (int e) {
-                        std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Where to: ";
-                        getline(std::cin, input);
+    //                    std::cout << "(int)I'm sorry Dave, I can't allow you to do that. Where to: ";
+      //                  getline(std::cin, input);
                         continue;
                     }
                     break;
                 }
                 //check for pawn promotion
-                try {
-                    Piece& p = b.need_promote();
-                    promote_piece(p);
-                } catch (int e)  {
-                }
-                print_board(b);
+//                try {
+//                    Piece& p = b.need_promote();
+//                    promote_piece(p);
+//                } catch (int e)  {
+//                }
+//                print_board(b);
                 break;
             }
-       } else
+       }/* else
         std::cout << "?";
 end_of_main_loop:
-        std::cout << "\nTurn for " << b.get_turn() <<": ";
+        std::cout << "\nEOML Turn for " << b.get_turn() <<": ";*/
     }
 }
 
@@ -207,7 +255,7 @@ void promote_piece(Piece& p) {
     std::cout << input << " it is then!\n";
 }
 
-void print_board(Board& b) {
+std::string print_board(Board& b) {
 /*    Player& wp = b.get_player("white");
     Player& bp = b.get_player("black");
         std::cout << "white pieces:\n";
@@ -219,23 +267,26 @@ void print_board(Board& b) {
         std::cout << p.get_pos().file << p.get_pos().rank << ": " << p.get_ech() << " q: " << p.get_qech() << " " << (p.alive?"ALIVE":"DEAD") << (p.quantum_known?" QKNOW":" QUNK") << (p.has_moved?" MOVED":" NOTMV") << "\n";
     }
     std::cout << "\n";//*/
-    std::cout << "    .------.------.------.------.------.------.------.------.\n";
-    std::cout << "    |      |      |      |      |      |      |      |      |\n";
+    std::string s;
+    s = "    .----.----.----.----.----.----.----.----.\n";
+//    s += "    |    |    |    |    |    |    |    |    |\n";
     for (char c = '8'; c >= '1'; --c) {
-        std::cout << " " << c << "  |  ";
+        s += " "; s+= c; s+= "  | ";
         for (char d = 'a'; d <= 'h'; ++d) {
             Position pos {d,c};
-            std::cout << b.get_piece_str(pos);
-            std::cout << "  |";
-            if (d < 'h') std::cout << "  ";
+            s += b.get_piece_str(pos);
+            s += " |";
+            if (d < 'h') s += " ";
         }
-        std::cout << "\n    |      |      |      |      |      |      |      |      |\n";
+	  s += "\n";
+//        s += "\n    |    |    |    |    |     |    |    |    |\n";
         if (c == '1') {
-            std::cout <<   "    .------.------.------.------.------.------.------.------.\n";
+            s +=   "    .----.----.----.----.----.----.----.----.\n";
             break;
         }
-        std::cout << "    .------+------+------+------+------+------+------+------.\n";
-        std::cout << "    |      |      |      |      |      |      |      |      |\n";
+        s += "    .----+----+----+----+----+----+----+----.\n";
+//        s += "    |    |    |    |    |    |    |    |    |\n";
     }
-    std::cout << "\n       a      b      c      d      e      f      g      h\n";
+    s += "\n       a    b    c    d    e    f    g    h\n";
+    return s;
 }
